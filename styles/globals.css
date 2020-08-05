@@ -4,13 +4,21 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 14px;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  color: blue;
 }
 
 * {
   box-sizing: border-box;
+}
+.mt2 {
+  margin-top: 2rem;
+}
+.flex {
+  display: flex;
 }
