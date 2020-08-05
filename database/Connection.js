@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { default: nextConnect } = require("next-connect");
+import nextConnect from "next-connect";
 let db = null;
 async function mongooseConnection(req, res, next) {
   if (!db) {
