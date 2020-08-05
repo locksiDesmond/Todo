@@ -31,7 +31,6 @@ handler.post(async (req, res) => {
           if (err) throw err;
           const token = jwt.sign({ id: createdUser._id }, process.env.KEY);
           const { name, email, date_joined, _id } = createdUser;
-          console.log(createdUser);
           res.json({
             token,
             user: { name, email, dateJoined: date_joined, id: _id },
