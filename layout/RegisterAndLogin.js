@@ -1,7 +1,15 @@
-import React from "react";
+import { useEffect } from "react";
 import styles from "../styles/Layout.module.css";
-
+import { useRouter } from "next/dist/client/router";
+import { useSelector } from "react-redux";
 export default function RegisterAndLogin(props) {
+  const { id, loading } = useSelector((state) => state.user);
+  const router = useRouter();
+  useEffect(() => {
+    if (!loading && id) {
+      router.push("/");
+    }
+  }, [id, loading]);
   return (
     <div className={styles.main}>
       <div className={styles.container}>
