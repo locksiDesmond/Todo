@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
 import styles from "../styles/Form.module.css";
+import { addUser } from "../redux/Action";
+import { useDispatch, useSelector } from "react-redux";
 export default function LoginForm() {
   const { register, errors, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+  const { error, loading } = useSelector((state) => state.user);
   const onSubmit = (data) => {
-    const { email, password } = data;
-    console.log(data);
+    dispatch(addUser(data, "login"));
   };
 
   return (
@@ -37,6 +40,7 @@ export default function LoginForm() {
           className={`${styles.button} ${styles.buttonCurve}`}
         />
       </div>
+      {loading ? <p>loading</p> : <p className={styles.error}>{error}</p>}
     </form>
   );
 }

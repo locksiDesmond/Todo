@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
 import styles from "../styles/Form.module.css";
+import { addUser } from "../redux/Action";
+import { useDispatch, useSelector } from "react-redux";
 export default function RegisterForm() {
   const { register, errors, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+  const { error, loading } = useSelector((state) => state.user);
   const onSubmit = (data) => {
-    const { email, password, name } = data;
-    console.log(data);
+    dispatch(addUser(data, "register"));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -45,6 +48,8 @@ export default function RegisterForm() {
           className={`${styles.button} ${styles.buttonCurve}`}
         />
       </div>
+      <p>{loading && "loading"}</p>
+      <p className={styles.error}>{error}</p>
     </form>
   );
 }
