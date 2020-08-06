@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/dist/client/router";
 import styles from "../styles/Layout.module.css";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import CreateListModal from "../component/CreateListModal";
 export default function Main(props) {
   const { id, loading } = useSelector((state) => state.user);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const router = useRouter();
   //   useEffect(() => {
   //     if (!loading && !id) {
@@ -20,14 +22,14 @@ export default function Main(props) {
       <div className={styles.main}>
         <div className={styles.containerFluid}>{props.children}</div>
       </div>
+      <CreateListModal
+        isOpen={modalIsOpen}
+        closeModal={() => setModalIsOpen(false)}
+      />
       {props.createList && (
-        <Link href="/createlist">
-          <a>
-            <div className={styles.create}>
-              <img src="/svg/createList.svg" alt="edit" />
-            </div>
-          </a>
-        </Link>
+        <div onClick={() => setModalIsOpen(true)} className={styles.create}>
+          <img src="/svg/createList.svg" alt="edit" />
+        </div>
       )}
     </React.Fragment>
   );
