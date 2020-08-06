@@ -4,8 +4,10 @@ import styles from "../styles/Card.module.css";
 import formStyles from "../styles/Form.module.css";
 import ListCard from "./../component/ListCard";
 import CreateListModal from "./../component/CreateListModal";
+import { useSelector } from "react-redux";
 export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { lists } = useSelector((state) => state.list);
   return (
     <Main createList>
       <CreateListModal
@@ -22,11 +24,9 @@ export default function Home() {
         </button>
       </div>
       <div className={styles.cards}>
-        <ListCard title="All" noOfTask="3" />
-        <ListCard title="All" noOfTask="3" />
-        <ListCard />
-        <ListCard />
-        <ListCard />
+        {lists.map((item, index) => (
+          <ListCard key={index} data={item} />
+        ))}
       </div>
     </Main>
   );
