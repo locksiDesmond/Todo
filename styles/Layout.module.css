@@ -8,6 +8,13 @@
   flex-direction: column;
   width: -webkit-fill-available;
 }
+.containerFluid {
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+  margin: 0;
+  margin-right: auto;
+}
 .suggestion {
   display: flex;
   flex-direction: column;
@@ -27,6 +34,43 @@
   font-size: 1.3rem;
   font-weight: bold;
 }
+.children {
+  display: flex;
+  flex-direction: column;
+}
+.nav {
+  display: grid;
+  padding: 0.5rem 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.h1 {
+  text-align: center;
+}
+.profile {
+  display: flex;
+  height: 3rem;
+  width: 3rem;
+  background-color: gray;
+  margin-left: 1rem;
+  align-self: center;
+}
+.create {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.3rem;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+}
+@media (max-width: 375px) {
+  .main {
+    padding: 2rem 0.5rem 0 0.7rem;
+  }
+}
 @media (min-width: 768px) {
   .main {
     justify-content: center;
@@ -34,6 +78,19 @@
   }
   .container {
     width: 40%;
+  }
+  .profile {
+    place-self: flex-start;
+    margin-left: 2rem;
+  }
+  .containerFluid {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+    margin: 0 3rem 2rem 10rem;
+  }
+  .create {
+    display: none;
   }
 }
 @media (min-width: 1024px) {
