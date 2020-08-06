@@ -22,10 +22,36 @@ export const addListFailed = (error) => ({
   type: Types.ADD_LIST_FAILED,
   payload: error,
 });
-export const addUser = (data, to) => async (dispatch) => {
+export const toggleTask = (id) => ({
+  type: Types.TOOGLE_TASK,
+  payload: id,
+});
+export const deleteTaskRequested = () => ({
+  type: Types.DELETE_TASK_REQUESTED,
+});
+export const deleteTaskFailed = (error) => ({
+  type: Types.DELETE_TASK_FAILED,
+  payload: error,
+});
+export const deleteTaskSucceeded = (id) => ({
+  type: Types.DELETE_TASK_SUCCEEDED,
+  payload: id,
+});
+export const addTaskRequested = () => ({
+  type: Types.ADD_TASK_REQUESTED,
+});
+export const addTaskSucceeded = (task) => ({
+  type: Types.ADD_TASK_SUCCEEDED,
+  payload: task,
+});
+export const addTaskFailed = (error) => ({
+  type: Types.ADD_TASK_FAILED,
+  payload: error,
+});
+export const addUser = (data, url) => async (dispatch) => {
   dispatch(addUserRequested());
 
-  const response = await fetch(`/api/${to}`, {
+  const response = await fetch(`${url}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,4 +84,29 @@ export const addList = (data) => async (dispatch) => {
   } else {
     dispatch(addListSucceeded(response));
   }
+};
+export const deletePost = (id) => async (dispatch) => {
+  dispatch(deleteTaskRequested());
+  const response = await fetch(`/api/lists?id=${id}`, {
+    method: "DELETE",
+  }).then((res) => res.json());
+};
+
+export const addTask = (data) => async (dispatch) => {
+  dispatch(addTaskRequested());
+  dispatch(addTaskSucceeded(data));
+  return { success: true };
+  // const response = await fetch(`/api/task`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(data),
+  // }).then((res) => res.json());
+
+  // if (response.details) {
+  //   dispatch(addTaskFailed(response));
+  // } else {
+  //   dispatch(addTaskSucceeded(response));
+  // }
 };
