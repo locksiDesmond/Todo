@@ -1,0 +1,74 @@
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 2rem;
+  column-gap: 2rem;
+}
+
+.title {
+  grid-area: title;
+  font-weight: bold;
+  padding-left: 2rem;
+}
+.task {
+  grid-area: task;
+  padding-left: 2rem;
+}
+.card {
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;
+  grid-template-areas: "...." "title" "task";
+  height: 12rem;
+  width: auto;
+  border: 1px solid #e3dddd;
+  transition: 0.3s ease-in-out all;
+}
+.card:hover {
+  box-shadow: 0 0 15px 2px #e3dddd;
+  border: 0 solid #e3dddd;
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+.wrapper {
+  width: 0px;
+  animation: fullView 0.5s forwards linear;
+  border: 0;
+}
+.wrapper:hover {
+  box-shadow: none;
+}
+.animate {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+  background-size: 1000px 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+@keyframes fullView {
+  100% {
+    width: 100%;
+  }
+}
+@media (max-width: 375px) {
+  .title {
+    padding-left: 1rem;
+  }
+  .task {
+    padding-left: 1rem;
+  }
+  .cards {
+    row-gap: 1rem;
+    column-gap: 1rem;
+  }
+}
