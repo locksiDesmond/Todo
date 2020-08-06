@@ -16,7 +16,7 @@ export default function RegisterAndLogin(props) {
         <div className={styles.logo}>
           <p className={styles.title}>{props.title}</p>
         </div>
-        <div className={styles.childrenContainer}>{props.children}</div>
+        <div>{props.children}</div>
         <div className={styles.suggestion}>{props.suggestion}</div>
       </div>
     </div>
