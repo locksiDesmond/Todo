@@ -7,7 +7,7 @@ export default function LoginForm() {
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.user);
   const onSubmit = (data) => {
-    dispatch(addUser(data, "login"));
+    dispatch(addUser(data, "/api/login"));
   };
 
   return (
