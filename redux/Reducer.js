@@ -16,3 +16,23 @@ export const user = (state = {}, action) => {
       return state;
   }
 };
+export const list = (state = { lists: [] }, action) => {
+  switch (action.type) {
+    case HYDRATE:
+      return state;
+    case Types.ADD_LIST_FAILED:
+      const message = action.payload.details[0].message;
+      return { ...state, error: message, loading: false };
+    case Types.ADD_LIST_REQUESTED:
+      return { ...state, loading: true };
+    case Types.ADD_LIST_SUCCEEDED:
+      return {
+        ...state,
+        lists: [...state.lists, action.payload],
+        loading: false,
+        error: "",
+      };
+    default:
+      return state;
+  }
+};

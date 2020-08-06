@@ -11,6 +11,17 @@ export const addUserFailed = (error) => ({
   type: Types.ADD_USER_FAILED,
   payload: error,
 });
+export const addListRequested = () => ({
+  type: Types.ADD_LIST_REQUESTED,
+});
+export const addListSucceeded = (title) => ({
+  type: Types.ADD_LIST_SUCCEEDED,
+  payload: title,
+});
+export const addListFailed = (error) => ({
+  type: Types.ADD_LIST_FAILED,
+  payload: error,
+});
 export const addUser = (data, to) => async (dispatch) => {
   dispatch(addUserRequested());
 
@@ -29,5 +40,22 @@ export const addUser = (data, to) => async (dispatch) => {
     Cookies.set("token", token, { expires: 1024 });
 
     dispatch(addUserSucceeded(user));
+  }
+};
+export const addList = (data) => async (dispatch) => {
+  dispatch(addListRequested());
+
+  const response = await fetch(`/api/createlist`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((res) => res.json());
+
+  if (response.details) {
+    dispatch(addListFailed(response));
+  } else {
+    dispatch(addListSucceeded(response));
   }
 };
