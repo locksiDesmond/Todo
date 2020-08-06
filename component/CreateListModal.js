@@ -1,24 +1,15 @@
 import Modal from "react-modal";
 import styles from "../styles/Form.module.css";
+import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addList } from "../redux/Action";
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+Modal.setAppElement("#__next");
 export default function CreateListModal(props) {
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.list);
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(addList(data));
   };
 
@@ -27,7 +18,7 @@ export default function CreateListModal(props) {
       isOpen={props.isOpen}
       //   onAfterOpen={afterOpenModal}
       onRequestClose={props.closeModal}
-      style={customStyles}
+      className={modalStyles.modal}
       contentLabel="Example Modal"
     >
       <div className="aria-close">

@@ -1,8 +1,8 @@
 import Joi from "@hapi/joi";
 import nextConnect from "next-connect";
-import Connection from "./../../database/Connection";
-import List from "./../../database/models/Lists";
-import Authorize from "./../../middleware/Authorize";
+import Connection from "../../database/Connection";
+import List from "../../database/models/Lists";
+import Authorize from "../../middleware/Authorize";
 
 const handler = nextConnect();
 handler.use(Authorize);
