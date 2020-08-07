@@ -48,18 +48,21 @@ export default function CreateListModal(props) {
           <input
             type="submit"
             value="Create"
+            disabled={loading ? "value" : null}
             className={`${styles.button} ${styles.buttonCurve}`}
           />
         </div>
 
         {loading ? (
-          <Loader
-            type="Oval"
-            color="#00BFFF"
-            height={100}
-            width={100}
-            timeout={3000} //3 secs
-          />
+          <div className="flex flex--center mt--2">
+            <Loader
+              type="Oval"
+              color="#00BFFF"
+              height={40}
+              width={40}
+              timeout={3000} //3 secs
+            />
+          </div>
         ) : (
           <p className={styles.error}>{error}</p>
         )}

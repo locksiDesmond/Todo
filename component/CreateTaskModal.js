@@ -4,6 +4,7 @@ import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, updateTask } from "./../redux/Action";
+import Loader from "react-loader-spinner";
 Modal.setAppElement("#__next");
 export default function CreateTaskModal(props) {
   const { register, errors, handleSubmit } = useForm();
@@ -21,7 +22,6 @@ export default function CreateTaskModal(props) {
       const response = await dispatch(
         addTask({ ...data, list: props.task._id })
       );
-      console.log({ response });
       if (response) {
         props.closeModal();
       }
@@ -92,12 +92,25 @@ export default function CreateTaskModal(props) {
         <div className="flex">
           <input
             type="submit"
+            disabled={loading ? "value" : null}
             value={props.update ? "Update" : "Add"}
             className={`${styles.button} ${styles.buttonCurve}`}
           />
         </div>
 
-        {loading ? <p>loading</p> : <p className={styles.error}>{error}</p>}
+        {loading ? (
+          <div className="flex flex--center mt--2">
+            <Loader
+              type="Oval"
+              color="#00BFFF"
+              height={40}
+              width={40}
+              timeout={3000} //3 secs
+            />
+          </div>
+        ) : (
+          <p className={styles.error}>{error}</p>
+        )}
       </form>
     </Modal>
   );

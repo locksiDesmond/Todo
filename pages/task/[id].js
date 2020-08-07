@@ -54,7 +54,9 @@ export default function Task() {
                 <div className="label my--1 label--sm">{data.list.title}</div>
               )}
               <span> | </span>
-              <span>{DateConversion(data.date_created)}</span>
+              <div className={styles.clock}>
+                <img src="/svg/clock.svg" /> {DateConversion(data.date_created)}
+              </div>
             </div>
             <div className={styles.descriptionGroup}>
               <p>Description</p>
