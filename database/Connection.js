@@ -14,6 +14,7 @@ async function mongooseConnection(req, res, next) {
       db = mongoose.connection;
       db.on("error", (err) => {
         // throw err;
+        db = null;
         console.log({ databseError: err });
       });
       // db.on("connected", () => {
