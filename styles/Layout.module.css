@@ -50,10 +50,62 @@
   display: flex;
   height: 3rem;
   width: 3rem;
-  background-color: gray;
   margin-left: 1rem;
+  position: relative;
   align-self: center;
 }
+.hr {
+  height: 1px;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+}
+.username {
+  margin: 0;
+}
+.more {
+  position: absolute;
+  bottom: -4rem;
+  border: 1px solid #e3dddd;
+  background-color: #fff;
+  z-index: 3;
+  padding: 1rem 2rem;
+  left: -0.3rem;
+  top: 2.8rem;
+  box-shadow: 0 0 20px rgba(14, 42, 71, 0.25);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  row-gap: 0.7rem;
+}
+.more::before {
+  font-size: 1.4em;
+  display: block;
+  width: 0;
+  height: 0;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: -0.45em;
+  left: 1rem;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  border-left: 12px solid transparent;
+}
+.more::after {
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  border-left: 12px solid transparent;
+}
+.show {
+  display: flex;
+}
+.none {
+  display: none;
+}
+
 .create {
   position: fixed;
   bottom: 2rem;

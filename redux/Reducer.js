@@ -1,5 +1,6 @@
 import { HYDRATE } from "next-redux-wrapper";
 import * as Types from "./Types";
+import isArrayEmpty from "./../lib/isArrayEmpty";
 
 export const user = (state = {}, action) => {
   switch (action.type) {
@@ -12,49 +13,13 @@ export const user = (state = {}, action) => {
       return { ...state, loading: true };
     case Types.ADD_USER_SUCCEEDED:
       return { ...state, ...action.payload, loading: false, error: "" };
+    case Types.REMOVE_USER:
+      return {};
     default:
       return state;
   }
 };
-const initialList = [
-  {
-    title: "All",
-    no_of_task: "4",
-    created_by: "skfjiwqrw232wdskf1",
-    _id: 1,
-  },
-  { title: "boss", _id: 2, no_of_task: "5", created_by: "skfjiwqrw232wdskf1" },
-  { title: "boss", _id: 3, no_of_task: "4", created_by: "skfjiwqrw232wdskf1" },
-];
-const initialTasks = [
-  {
-    title: "boss",
-    date: "3d",
-    checked: true,
-    id: "3",
-    list: 1,
-    description: "dsf s dskdsf asuyi skiuwl ouw",
-    _id: "3",
-  },
-  {
-    id: "1",
-    _id: "12",
-    description: "dsf s dskdsf asuyi skiuwl ouw",
-    title: "kill them",
-    date: "1d",
-    checked: false,
-  },
-  {
-    description: "buy machete and slaughter em all",
-    id: "1",
-    _id: "3",
-    title: "kill us",
-    date: "1d",
-    checked: false,
-  },
-  { id: "1", _id: "1", title: "kil You", date: "1d", checked: false },
-];
-export const list = (state = { lists: initialList }, action) => {
+export const list = (state = { lists: [] }, action) => {
   switch (action.type) {
     case HYDRATE:
       return state;
@@ -62,32 +27,56 @@ export const list = (state = { lists: initialList }, action) => {
       const message = action.payload.details[0].message;
       return { ...state, error: message, loading: false };
     case Types.ADD_LIST_REQUESTED:
-      return { ...state, loading: true };
+    case Types.DELETE_LIST_REQUESTED:
+      return {
+        ...state,
+        fetching: isArrayEmpty(state.lists) ? true : false,
+        loading: true,
+      };
     case Types.ADD_LIST_SUCCEEDED:
       return {
         ...state,
         lists: [...state.lists, action.payload],
         loading: false,
+        fetching: false,
         error: "",
       };
+    case Types.CLEAR_LIST:
+      return { ...state, lists: [], loading: false, error: null };
+    case Types.DELETE_LIST_SUCCEEDED:
+      const filteredList = state.lists.filter((item) => {
+        if (item._id !== action.payload) {
+          return true;
+        }
+      });
+      return { ...state, lists: [...filteredList] };
+    case Types.REMOVE_USER:
+      return { list: [] };
     default:
       return state;
   }
 };
-export const tasks = (state = { tasks: initialTasks }, action) => {
+export const tasks = (state = { tasks: [] }, action) => {
   switch (action.type) {
     case HYDRATE:
       return state;
     case Types.ADD_TASK_FAILED:
+    case Types.UPDATE_TASK_FAILED:
       const message = action.payload.details[0].message;
       return { ...state, error: message, loading: false };
     case Types.ADD_TASK_REQUESTED:
-      return { ...state, loading: true };
+    case Types.UPDATE_TASK_REQUESTED:
+      return {
+        ...state,
+        fetching: isArrayEmpty(state.tasks) ? true : false,
+        loading: true,
+      };
     case Types.ADD_TASK_SUCCEEDED:
       return {
         ...state,
         tasks: [...state.tasks, action.payload],
         loading: false,
+        fetching: false,
         error: "",
       };
     case Types.TOOGLE_TASK:
@@ -97,8 +86,26 @@ export const tasks = (state = { tasks: initialTasks }, action) => {
         }
         return item;
       });
-
       return { ...state, tasks: [...newList] };
+    case Types.UPDATE_TASK_SUCCEEDED:
+      const listWithUpdate = state.tasks.map((item, index) => {
+        if (item._id === action.payload._id) {
+          return { ...item, ...action.payload };
+        }
+        return item;
+      });
+      return { ...state, tasks: [...listWithUpdate] };
+    case Types.DELETE_TASK_SUCCEEDED:
+      const filteredList = state.tasks.filter((item) => {
+        if (item._id !== action.payload) {
+          return true;
+        }
+      });
+      return { ...state, tasks: [...filteredList] };
+    case Types.CLEAR_TASK:
+      return { ...state, tasks: [], loading: false, error: null };
+    case Types.REMOVE_USER:
+      return { tasks: [] };
     default:
       return state;
   }

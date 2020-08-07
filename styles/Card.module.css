@@ -74,12 +74,38 @@
 }
 .more {
   position: absolute;
-  bottom: -4rem;
+  bottom: -4.9rem;
   border: 1px solid #e3dddd;
   background-color: #fff;
   z-index: 3;
-  padding: 0.3rem 2rem;
-  right: 0.2rem;
+  padding: 1rem 2rem;
+  right: 0.8rem;
+  box-shadow: 0 0 60px rgba(14, 42, 71, 0.25);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  row-gap: 0.5rem;
+}
+.more::before {
+  font-size: 1.4em;
+  display: block;
+  width: 0;
+  height: 0;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: -0.45em;
+  right: 1rem;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  border-left: 12px solid transparent;
+}
+.more::after {
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  border-left: 12px solid transparent;
 }
 .show {
   display: flex;
