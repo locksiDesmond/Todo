@@ -28,4 +28,24 @@ handler.post(async (req, res) => {
     );
   }
 });
+handler.get(async (req, res) => {
+  await List.find({ created_by: res.decodeId }, (err, lists) => {
+    if (err) throw err;
+    if (lists) {
+      res.json(lists);
+    }
+  });
+});
+handler.delete(async (req, res) => {
+  if (req.query.id) {
+    await List.findByIdAndDelete(req.query.id, (err, result) => {
+      if (err) throw err;
+      if (result) {
+        res.json({ message: "List successfully deleted" });
+      }
+    });
+  } else {
+    throw "no id found";
+  }
+});
 export default handler;

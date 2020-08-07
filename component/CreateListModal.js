@@ -4,13 +4,17 @@ import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addList } from "../redux/Action";
+import Loader from "react-loader-spinner";
 Modal.setAppElement("#__next");
 export default function CreateListModal(props) {
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.list);
-  const onSubmit = (data) => {
-    dispatch(addList(data));
+  const onSubmit = async (data) => {
+    const response = await dispatch(addList(data));
+    if (response) {
+      props.closeModal();
+    }
   };
 
   return (
@@ -48,7 +52,17 @@ export default function CreateListModal(props) {
           />
         </div>
 
-        {loading ? <p>loading</p> : <p className={styles.error}>{error}</p>}
+        {loading ? (
+          <Loader
+            type="Oval"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        ) : (
+          <p className={styles.error}>{error}</p>
+        )}
       </form>
     </Modal>
   );

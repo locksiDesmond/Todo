@@ -1,13 +1,19 @@
 import Main from "./../layout/Main";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/Card.module.css";
 import formStyles from "../styles/Form.module.css";
 import ListCard from "./../component/ListCard";
 import CreateListModal from "./../component/CreateListModal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getList } from "./../redux/Action";
+import isArrayEmpty from "./../lib/isArrayEmpty";
 export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { lists } = useSelector((state) => state.list);
+  const { lists, pending } = useSelector((state) => state.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getList());
+  }, []);
   return (
     <Main createList>
       <CreateListModal
@@ -24,9 +30,15 @@ export default function Home() {
         </button>
       </div>
       <div className={styles.cards}>
-        {lists.map((item, index) => (
-          <ListCard key={index} data={item} />
-        ))}
+        {pending ? (
+          new Array(4)
+            .fill(null)
+            .map((item, index) => <ListCard key={index} data={item} />)
+        ) : isArrayEmpty(lists) ? (
+          <p>you need to post item </p>
+        ) : (
+          lists.map((item, index) => <ListCard key={index} data={item} />)
+        )}
       </div>
     </Main>
   );
