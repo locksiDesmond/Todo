@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
 import styles from "../styles/Layout.module.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,10 +7,9 @@ import CreateListModal from "../component/CreateListModal";
 import CreateTaskModal from "../component/CreateTaskModal";
 import { removeUser } from "../redux/Action";
 import Link from "next/link";
+import { openModal } from "./../redux/Action";
 export default function Main(props) {
   const { name, id, loading } = useSelector((state) => state.user);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [taskModalIsOpen, setTaskModalIsOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -20,11 +20,17 @@ export default function Main(props) {
   }, [id, loading]);
   return (
     <React.Fragment>
+      <Head>
+        <title>Todo</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content="A todo list app" />
+      </Head>
       <nav className={styles.nav}>
         <div className={styles.profile}>
           <img
             src="/svg/user.svg"
             onClick={() => setShowProfile(!showProfile)}
+            className="cursor"
             alt="profile"
           />
           <div
@@ -36,7 +42,7 @@ export default function Main(props) {
             <div className={styles.hr}></div>
             <div
               onClick={() => dispatch(removeUser())}
-              className="text--cancel"
+              className="text--cancel cursor"
             >
               Logout
             </div>
@@ -51,26 +57,19 @@ export default function Main(props) {
       <div className={styles.main}>
         <div className={styles.containerFluid}>{props.children}</div>
       </div>
-      <CreateListModal
-        isOpen={modalIsOpen}
-        closeModal={() => setModalIsOpen(false)}
-      />
-      <CreateTaskModal
-        task={props.task}
-        isOpen={taskModalIsOpen}
-        closeModal={() => setTaskModalIsOpen(false)}
-      />
+      {props.createList && <CreateListModal />}
       {props.createList && (
         <div
-          onClick={() => setModalIsOpen(true)}
+          onClick={() => dispatch(openModal())}
           id="yourAppElement"
           className={styles.create}
         >
           <img src="/svg/createList.svg" alt="edit" />
         </div>
       )}
+      {props.createTask && <CreateTaskModal task={props.task} id={props.id} />}
       {props.createTask && (
-        <div onClick={() => setTaskModalIsOpen(true)} className={styles.create}>
+        <div onClick={() => dispatch(openModal())} className={styles.create}>
           <img src="/svg/createList.svg" alt="edit" />
         </div>
       )}

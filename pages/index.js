@@ -3,12 +3,10 @@ import { useState, useEffect } from "react";
 import styles from "../styles/Card.module.css";
 import formStyles from "../styles/Form.module.css";
 import ListCard from "./../component/ListCard";
-import CreateListModal from "./../component/CreateListModal";
 import { useSelector, useDispatch } from "react-redux";
-import { getList } from "./../redux/Action";
+import { getList, openModal } from "./../redux/Action";
 import isArrayEmpty from "./../lib/isArrayEmpty";
 export default function Home() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { lists, pending } = useSelector((state) => state.list);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,36 +14,30 @@ export default function Home() {
   }, []);
   return (
     <Main createList>
-      <CreateListModal
-        isOpen={modalIsOpen}
-        closeModal={() => setModalIsOpen(false)}
-      />
-      <div className="flex flex--space-between mb--1">
-        <p className="title"> List</p>
+      <div className="flex flex--space-between flex--align-center mb--1">
+        <h2 className="text--bold ml--1">Lists</h2>
         <button
-          onClick={() => setModalIsOpen(true)}
-          className={`${formStyles.button} button--box-shadow width--auto`}
+          onClick={() => dispatch(openModal())}
+          className={`${formStyles.button} button--box-shadow width--auto bg--create button--md`}
         >
           Create list
         </button>
       </div>
-      <div className={styles.cards}>
-        {pending ? (
-          new Array(4)
-            .fill(null)
-            .map((item, index) => <ListCard key={index} data={item} />)
-        ) : isArrayEmpty(lists) ? (
-          <p>you need to post item </p>
-        ) : (
-          lists.map((item, index) => (
-            <ListCard
-              handleClick={() => setModalIsOpen(true)}
-              key={index}
-              data={item}
-            />
-          ))
-        )}
-      </div>
+      {pending ? (
+        <div className={styles.cards}>
+          {new Array(4).fill(null).map((item, index) => (
+            <ListCard key={index} data={item} />
+          ))}
+        </div>
+      ) : isArrayEmpty(lists) ? (
+        <p className="flex flex--center"> You have no todo list</p>
+      ) : (
+        <div className={styles.cards}>
+          {lists.map((item, index) => (
+            <ListCard key={index} data={item} />
+          ))}
+        </div>
+      )}
     </Main>
   );
 }

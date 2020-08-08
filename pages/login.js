@@ -12,7 +12,7 @@ export default function Login() {
           <p>Don't have an account?</p>
           <span>
             <Link href="/register">
-              <a>Create an account</a>
+              <a className="text--bold">Create an account</a>
             </Link>
           </span>
         </React.Fragment>

@@ -42,12 +42,12 @@ export const toggleTask = (id) => ({
   type: Types.TOOGLE_TASK,
   payload: id,
 });
-export const toggleModal = () => ({
-  type: Types.TOGGLE_MODAL,
-});
-export const addModalDefaultValues = (data) => ({
-  type: Types.ADD_MODAL_DEFAULTVALUES,
+export const openModal = (data = null) => ({
+  type: Types.OPEN_MODAL,
   payload: data,
+});
+export const closeModal = () => ({
+  type: Types.CLOSE_MODAL,
 });
 export const deleteTaskRequested = () => ({
   type: Types.DELETE_TASK_REQUESTED,
@@ -181,7 +181,7 @@ export const deleteTask = (id) => async (dispatch) => {
   }
 };
 export const updateTask = (data, id) => async (dispatch) => {
-  dispatch(updateTaskRequest);
+  dispatch(updateTaskRequest());
   const response = await fetch(`/api/task?id=${id}`, {
     method: "PUT",
     headers: {
@@ -191,6 +191,6 @@ export const updateTask = (data, id) => async (dispatch) => {
   }).then((res) => res.json());
   if (response.task) {
     dispatch(updateTaskSucceeded(response.task));
-    return;
+    return { message: "done" };
   }
 };

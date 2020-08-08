@@ -3,18 +3,17 @@ import { useState, useEffect } from "react";
 import Main from "./../../layout/Main";
 import Router, { useRouter } from "next/router";
 import styles from "../../styles/Task.module.css";
-import CreateTaskModal from "./../../component/CreateTaskModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DateConversion } from "./../../lib/DateConversion";
-import { deleteTask } from "./../../redux/Action";
+import { deleteTask, openModal } from "./../../redux/Action";
 import Spinner from "./../../component/Spinner";
 export default function Task() {
   const router = useRouter();
   const { id } = router.query;
-  const [taskModalIsOpen, setTaskModalIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const tasks = useSelector((state) => state.tasks);
   const handleDelete = async () => {
     const response = await dispatch(deleteTask(id));
     if (response) {
@@ -40,7 +39,7 @@ export default function Task() {
     }
   }, [id]);
   return (
-    <Main>
+    <Main createTask task={data.list} id={data._id}>
       {loading ? (
         <div className="flex flex--center">
           <Spinner />
@@ -66,25 +65,25 @@ export default function Task() {
               <button
                 className={`${formStyles.button} mx--1 button--box-shadow width--auto bg--cancel`}
                 onClick={() => handleDelete()}
+                disabled={tasks.loading ? "value" : null}
               >
                 Delete
               </button>
               <button
-                onClick={() => setTaskModalIsOpen(true)}
+                onClick={() =>
+                  dispatch(
+                    openModal({
+                      title: data.title,
+                      description: data.description,
+                    })
+                  )
+                }
                 className={`${formStyles.button} mx--1 button--box-shadow width--auto`}
               >
                 Update Task
               </button>
             </div>
           </div>
-          <CreateTaskModal
-            isOpen={taskModalIsOpen}
-            defaultValues={{ title: data.title, description: data.description }}
-            id={data._id}
-            update
-            task={data.list}
-            closeModal={() => setTaskModalIsOpen(false)}
-          />
         </React.Fragment>
       )}
     </Main>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "../styles/Card.module.css";
 import Router from "next/router";
 import { useDispatch } from "react-redux";
-import { deleteList, addModalDefaultValues } from "./../redux/Action";
+import { deleteList, openModal } from "./../redux/Action";
 export default function ListCard({ data }) {
   const [showDelete, setShowDelete] = useState(false);
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export default function ListCard({ data }) {
   const handleEdit = (e) => {
     e.stopPropagation();
     setShowDelete(!showDelete);
-    dispatch(addModalDefaultValues({ title: data.title }));
+    dispatch(openModal({ title: data.title }));
   };
   return (
     <div
@@ -48,7 +48,9 @@ export default function ListCard({ data }) {
       <div
         className={`${styles.more} ${showDelete ? styles.show : styles.none}`}
       >
-        <div onClick={(e) => handleEdit(e)}>Edit</div>
+        <div className="text--create text--bold" onClick={(e) => handleEdit(e)}>
+          Edit
+        </div>
         <div
           className="text--cancel text--bold"
           onClick={(e) => handleDelete(e)}

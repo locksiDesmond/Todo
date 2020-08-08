@@ -1,7 +1,7 @@
 import { HYDRATE } from "next-redux-wrapper";
 import * as Types from "./Types";
 import isArrayEmpty from "./../lib/isArrayEmpty";
-import { toggleModal } from "./Action";
+import { openModal } from "./Action";
 
 export const user = (state = {}, action) => {
   switch (action.type) {
@@ -66,6 +66,7 @@ export const tasks = (state = { tasks: [] }, action) => {
       const message = action.payload.details[0].message;
       return { ...state, error: message, loading: false };
     case Types.ADD_TASK_REQUESTED:
+    case Types.DELETE_TASK_REQUESTED:
     case Types.UPDATE_TASK_REQUESTED:
       return {
         ...state,
@@ -95,14 +96,26 @@ export const tasks = (state = { tasks: [] }, action) => {
         }
         return item;
       });
-      return { ...state, tasks: [...listWithUpdate] };
+      return {
+        ...state,
+        tasks: [...listWithUpdate],
+        loading: false,
+        fetching: false,
+        error: "",
+      };
     case Types.DELETE_TASK_SUCCEEDED:
       const filteredList = state.tasks.filter((item) => {
         if (item._id !== action.payload) {
           return true;
         }
       });
-      return { ...state, tasks: [...filteredList] };
+      return {
+        ...state,
+        tasks: [...filteredList],
+        loading: false,
+        fetching: false,
+        error: "",
+      };
     case Types.CLEAR_TASK:
       return { ...state, tasks: [], loading: false, error: null };
     case Types.REMOVE_USER:
@@ -115,10 +128,13 @@ export const modal = (state = { isOpen: false }, action) => {
   switch (action.type) {
     case HYDRATE:
       return state;
-    case Types.TOGGLE_MODAL:
+    case Types.OPEN_MODAL:
+      if (action.payload) {
+        return { ...state, defaultValues: { ...action.payload }, isOpen: true };
+      }
       return { ...state, isOpen: !state.isOpen };
-    case Types.ADD_MODAL_DEFAULTVALUES:
-      return { ...state, defaultValues: { ...action.payload }, isOpen: true };
+    case Types.CLOSE_MODAL:
+      return { isOpen: false };
     default:
       return state;
   }

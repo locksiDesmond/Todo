@@ -3,46 +3,47 @@ import styles from "../styles/Form.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, updateTask } from "./../redux/Action";
+import { addTask, updateTask, closeModal } from "./../redux/Action";
 import Loader from "react-loader-spinner";
 Modal.setAppElement("#__next");
 export default function CreateTaskModal(props) {
   const { register, errors, handleSubmit } = useForm();
-  const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.tasks);
+  const modal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
+
   const onSubmit = async (data) => {
-    if (props.update) {
+    if (props.id) {
       const response = await dispatch(
         updateTask({ ...data, list: props.task._id }, props.id)
       );
       if (response) {
-        props.closeModal();
+        dispatch(closeModal());
       }
     } else {
       const response = await dispatch(
         addTask({ ...data, list: props.task._id })
       );
       if (response) {
-        props.closeModal();
+        dispatch(closeModal());
       }
     }
   };
   return (
     <Modal
-      isOpen={props.isOpen}
-      // onAfterOpen={afterOpenModal}
-      onRequestClose={props.closeModal}
+      isOpen={modal.isOpen}
+      onRequestClose={() => dispatch(closeModal())}
       className={modalStyles.modal}
       aria={{
         labelledby: "title",
         describedby: "full_description",
       }}
-      contentLabel="Example Modal"
+      contentLabel="Add Task"
     >
       <div className="aria-close">
         <button
-          className="aria-close__button text--cancel"
-          onClick={props.closeModal}
+          className="aria-close__button bg--cancel"
+          onClick={() => dispatch(closeModal())}
         >
           close
         </button>
@@ -56,7 +57,7 @@ export default function CreateTaskModal(props) {
             placeholder="Task Title"
             type="text"
             defaultValue={
-              props.defaultValues ? props.defaultValues.title : null
+              modal.defaultValues ? modal.defaultValues.title : null
             }
             className={styles.input}
             ref={register({ required: true })}
@@ -72,7 +73,7 @@ export default function CreateTaskModal(props) {
             placeholder="Task description"
             type="text"
             defaultValue={
-              props.defaultValues ? props.defaultValues.description : null
+              modal.defaultValues ? modal.defaultValues.description : null
             }
             className={`${styles.input} ${styles.description}`}
             ref={register({ required: true })}
@@ -93,7 +94,7 @@ export default function CreateTaskModal(props) {
           <input
             type="submit"
             disabled={loading ? "value" : null}
-            value={props.update ? "Update" : "Add"}
+            value={props.id ? "Update" : "Add"}
             className={`${styles.button} ${styles.buttonCurve}`}
           />
         </div>

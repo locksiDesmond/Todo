@@ -10,7 +10,7 @@ export default function Register() {
           <p>Already have an account? </p>
           <span>
             <Link href="/login">
-              <a>Login</a>
+              <a className="text--bold">Login</a>
             </Link>
           </span>
         </React.Fragment>

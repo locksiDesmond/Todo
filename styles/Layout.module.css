@@ -62,6 +62,7 @@
 }
 .username {
   margin: 0;
+  text-transform: capitalize;
 }
 .more {
   position: absolute;
@@ -116,7 +117,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+  background-color: #364156;
 }
 @media (max-width: 375px) {
   .main {

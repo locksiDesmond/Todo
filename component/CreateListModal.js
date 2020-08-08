@@ -3,8 +3,9 @@ import styles from "../styles/Form.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addList, toggleModal } from "../redux/Action";
+import { addList, openModal } from "../redux/Action";
 import Loader from "react-loader-spinner";
+import { closeModal } from "./../redux/Action";
 Modal.setAppElement("#__next");
 export default function CreateListModal(props) {
   const { register, errors, handleSubmit } = useForm();
@@ -14,22 +15,21 @@ export default function CreateListModal(props) {
   const onSubmit = async (data) => {
     const response = await dispatch(addList(data));
     if (response) {
-      dispatch(toggleModal());
+      dispatch(closeModal());
     }
   };
 
   return (
     <Modal
       isOpen={modal.isOpen}
-      //   onAfterOpen={afterOpenModal}
-      onRequestClose={() => dispatch(toggleModal())}
+      onRequestClose={() => dispatch(closeModal())}
       className={modalStyles.modal}
-      contentLabel="Example Modal"
+      contentLabel="Create list modal"
     >
       <div className="aria-close">
         <button
           className="aria-close__button bg--cancel"
-          onClick={() => dispatch(toggleModal())}
+          onClick={() => dispatch(closeModal())}
         >
           close
         </button>
@@ -64,7 +64,7 @@ export default function CreateListModal(props) {
               color="#00BFFF"
               height={40}
               width={40}
-              timeout={3000} //3 secs
+              timeout={6000}
             />
           </div>
         ) : (

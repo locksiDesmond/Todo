@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import styles from "../styles/Form.module.css";
 import { addUser } from "../redux/Action";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "react-loader-spinner";
 export default function RegisterForm() {
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
@@ -48,7 +49,19 @@ export default function RegisterForm() {
           className={`${styles.button} ${styles.buttonCurve}`}
         />
       </div>
-      <p>{loading && "loading"}</p>
+      <p>
+        {loading && (
+          <div className="flex flex--center mt--2">
+            <Loader
+              type="Oval"
+              color="#00BFFF"
+              height={40}
+              width={40}
+              timeout={6000}
+            />
+          </div>
+        )}
+      </p>
       <p className={styles.error}>{error}</p>
     </form>
   );
