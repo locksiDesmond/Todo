@@ -1,9 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/Card.module.css";
-import formStyles from "../styles/Form.module.css";
 import Router from "next/router";
 import { useDispatch } from "react-redux";
-import { deleteList } from "./../redux/Action";
+import { deleteList, addModalDefaultValues } from "./../redux/Action";
 export default function ListCard({ data }) {
   const [showDelete, setShowDelete] = useState(false);
   const dispatch = useDispatch();
@@ -11,6 +10,16 @@ export default function ListCard({ data }) {
     if (data) {
       Router.push(`/tasks/${data._id}`);
     }
+  };
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    dispatch(deleteList(data._id));
+    setShowDelete(!showDelete);
+  };
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    setShowDelete(!showDelete);
+    dispatch(addModalDefaultValues({ title: data.title }));
   };
   return (
     <div
@@ -39,14 +48,10 @@ export default function ListCard({ data }) {
       <div
         className={`${styles.more} ${showDelete ? styles.show : styles.none}`}
       >
-        <div>Edit</div>
+        <div onClick={(e) => handleEdit(e)}>Edit</div>
         <div
           className="text--cancel text--bold"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(deleteList(data._id));
-            setShowDelete(!showDelete);
-          }}
+          onClick={(e) => handleDelete(e)}
         >
           Delete
         </div>

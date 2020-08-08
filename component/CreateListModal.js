@@ -3,32 +3,33 @@ import styles from "../styles/Form.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addList } from "../redux/Action";
+import { addList, toggleModal } from "../redux/Action";
 import Loader from "react-loader-spinner";
 Modal.setAppElement("#__next");
 export default function CreateListModal(props) {
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.list);
+  const modal = useSelector((state) => state.modal);
   const onSubmit = async (data) => {
     const response = await dispatch(addList(data));
     if (response) {
-      props.closeModal();
+      dispatch(toggleModal());
     }
   };
 
   return (
     <Modal
-      isOpen={props.isOpen}
+      isOpen={modal.isOpen}
       //   onAfterOpen={afterOpenModal}
-      onRequestClose={props.closeModal}
+      onRequestClose={() => dispatch(toggleModal())}
       className={modalStyles.modal}
       contentLabel="Example Modal"
     >
       <div className="aria-close">
         <button
           className="aria-close__button bg--cancel"
-          onClick={props.closeModal}
+          onClick={() => dispatch(toggleModal())}
         >
           close
         </button>
@@ -39,6 +40,9 @@ export default function CreateListModal(props) {
             name="title"
             placeholder="List Title"
             type="title"
+            defaultValue={
+              modal.defaultValues ? modal.defaultValues.title : null
+            }
             className={styles.input}
             ref={register({ required: true })}
           />

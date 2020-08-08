@@ -15,7 +15,7 @@ export default function Tasks() {
   const [currentList, setCurrentList] = useState({});
   const [currentTasks, setCurrentTasks] = useState();
   const [checkedItems, setCheckedItems] = useState([]);
-  const { tasks, fetching } = useSelector((state) => state.tasks);
+  const { tasks, loading } = useSelector((state) => state.tasks);
   const { lists } = useSelector((state) => state.list);
   const dispatch = useDispatch();
 
@@ -78,12 +78,14 @@ export default function Tasks() {
           </div>
         </div>
         <div className={styles.taskCards}>
-          {fetching ? (
-            new Array(4)
-              .fill(null)
-              .map((item, index) => <TaskCard key={index} data={item} />)
-          ) : isArrayEmpty(currentTasks) ? (
-            <p>No task </p>
+          {isArrayEmpty(currentTasks) ? (
+            loading ? (
+              new Array(4)
+                .fill(null)
+                .map((item, index) => <TaskCard key={index} data={item} />)
+            ) : (
+              <p>No task </p>
+            )
           ) : (
             currentTasks
           )}

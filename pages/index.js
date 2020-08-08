@@ -37,7 +37,13 @@ export default function Home() {
         ) : isArrayEmpty(lists) ? (
           <p>you need to post item </p>
         ) : (
-          lists.map((item, index) => <ListCard key={index} data={item} />)
+          lists.map((item, index) => (
+            <ListCard
+              handleClick={() => setModalIsOpen(true)}
+              key={index}
+              data={item}
+            />
+          ))
         )}
       </div>
     </Main>

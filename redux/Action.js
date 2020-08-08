@@ -42,6 +42,13 @@ export const toggleTask = (id) => ({
   type: Types.TOOGLE_TASK,
   payload: id,
 });
+export const toggleModal = () => ({
+  type: Types.TOGGLE_MODAL,
+});
+export const addModalDefaultValues = (data) => ({
+  type: Types.ADD_MODAL_DEFAULTVALUES,
+  payload: data,
+});
 export const deleteTaskRequested = () => ({
   type: Types.DELETE_TASK_REQUESTED,
 });

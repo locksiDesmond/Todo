@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CreateListModal from "../component/CreateListModal";
 import CreateTaskModal from "../component/CreateTaskModal";
 import { removeUser } from "../redux/Action";
+import Link from "next/link";
 export default function Main(props) {
   const { name, id, loading } = useSelector((state) => state.user);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -41,7 +42,11 @@ export default function Main(props) {
             </div>
           </div>
         </div>
-        <h1 className={styles.h1}>Todo</h1>
+        <Link href="/">
+          <a>
+            <h1 className={styles.h1}>Todo</h1>
+          </a>
+        </Link>
       </nav>
       <div className={styles.main}>
         <div className={styles.containerFluid}>{props.children}</div>

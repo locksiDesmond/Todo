@@ -1,6 +1,7 @@
 import { HYDRATE } from "next-redux-wrapper";
 import * as Types from "./Types";
 import isArrayEmpty from "./../lib/isArrayEmpty";
+import { toggleModal } from "./Action";
 
 export const user = (state = {}, action) => {
   switch (action.type) {
@@ -106,6 +107,18 @@ export const tasks = (state = { tasks: [] }, action) => {
       return { ...state, tasks: [], loading: false, error: null };
     case Types.REMOVE_USER:
       return { tasks: [] };
+    default:
+      return state;
+  }
+};
+export const modal = (state = { isOpen: false }, action) => {
+  switch (action.type) {
+    case HYDRATE:
+      return state;
+    case Types.TOGGLE_MODAL:
+      return { ...state, isOpen: !state.isOpen };
+    case Types.ADD_MODAL_DEFAULTVALUES:
+      return { ...state, defaultValues: { ...action.payload }, isOpen: true };
     default:
       return state;
   }
