@@ -16,6 +16,7 @@ export default function RegisterAndLogin(props) {
       <Head>
         <title>Todo</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content="A todo list app" />
       </Head>
       <div className={styles.container}>
         <div className={styles.logo}>
