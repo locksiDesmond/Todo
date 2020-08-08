@@ -22,8 +22,6 @@ export default function Main(props) {
     <React.Fragment>
       <Head>
         <title>Todo</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="description" content="A todo list app" />
       </Head>
       <nav className={styles.nav}>
         <div className={styles.profile}>
