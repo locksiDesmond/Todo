@@ -5,19 +5,23 @@ import Authorize from "./../../middleware/Authorize";
 import Task from "./../../database/models/Tasks";
 import List from "./../../database/models/Lists";
 const Async = require("async");
+
+// joi schema for authentication
 const schema = Joi.object().keys({
   title: Joi.string().min(3).required(),
   description: Joi.string().required(),
   list: Joi.string().required(),
 });
 const handler = nextConnect();
-handler.use(Authorize);
-handler.use(Connection);
+handler.use(Authorize); //check's if user is authorized
+handler.use(Connection); // connects to database
 handler.post(async (req, res) => {
+  // validates user's form data
   const { error } = schema.validate(req.body);
   if (error) {
     res.json(error);
   } else {
+    //Asynchronously creates a todo task , find the list it belongs to ,update the no of task it contains then return the task to client
     Async.waterfall(
       [
         function (callback) {
@@ -64,6 +68,7 @@ handler.post(async (req, res) => {
 
 handler.get(async (req, res) => {
   if (req.query.list) {
+    //gets all available tasks of a list
     await Task.find({ list: req.query.list }, (err, list) => {
       if (err) {
         throw err;
@@ -73,6 +78,7 @@ handler.get(async (req, res) => {
       }
     });
   } else if (req.query.id) {
+    // finds a task using it's id
     const task = await Task.findById(req.query.id).populate("list");
     res.json(task);
   } else {
@@ -86,6 +92,7 @@ handler.put(async (req, res) => {
     res.json(error);
   } else {
     if (req.query.id) {
+      // updates a task
       await Task.findByIdAndUpdate(
         req.query.id,
         { ...req.body },
@@ -102,6 +109,7 @@ handler.put(async (req, res) => {
 });
 handler.delete(async (req, res) => {
   if (req.query.id) {
+    //Asynchronously  deletes a todo task , find the list it belongs to ,update the no of task it contains then return a message to the client
     Async.waterfall(
       [
         function (callback) {

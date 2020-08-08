@@ -17,10 +17,11 @@ export default function Task() {
   const handleDelete = async () => {
     const response = await dispatch(deleteTask(id));
     if (response) {
-      Router.push(`/tasks/${data.list._id}`);
+      Router.push(`/tasks/${data.list._id}`); // reroute user back to Tasks page
     }
   };
   useEffect(() => {
+    // fetch a task using its id
     const fetchTask = async () => {
       try {
         const response = await fetch(`/api/task?id=${id}`).then((res) =>
@@ -39,6 +40,7 @@ export default function Task() {
     }
   }, [id]);
   const handleTaskUpdate = async () => {
+    // sends a request to open modal with default values
     dispatch(
       openModal(
         {

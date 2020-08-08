@@ -17,11 +17,13 @@ export default function Tasks() {
   const { lists } = useSelector((state) => state.list);
   const dispatch = useDispatch();
   const handleDelete = () => {
+    //checks if tasks are checked
     checkedItems.map((item) => {
       dispatch(deleteTask(item._id));
     });
   };
   useEffect(() => {
+    //filters tasks base on page dynamic id
     const item = tasks.filter(
       (element) => element.list === id && element.checked
     );
@@ -38,7 +40,7 @@ export default function Tasks() {
   }, [tasks, loading]);
   useEffect(() => {
     if (id) {
-      dispatch(getTask(id));
+      dispatch(getTask(id)); //fetch for task
       lists.forEach((element) => {
         if (element._id === id) {
           setCurrentList(element);

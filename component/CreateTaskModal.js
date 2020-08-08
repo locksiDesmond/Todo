@@ -20,14 +20,13 @@ export default function CreateTaskModal(props) {
     if (options && options.id) {
       response = await dispatch(
         updateTask({ ...data, list: options.task._id }, options.id)
-      );
-
+      ); // updates task
       Router.reload();
     } else {
-      response = await dispatch(addTask({ ...data, list: options.task._id }));
+      response = await dispatch(addTask({ ...data, list: options.task._id })); // add task
     }
     if (response) {
-      dispatch(closeModal());
+      dispatch(closeModal()); // closes modal
     }
   };
   return (

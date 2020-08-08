@@ -13,13 +13,13 @@ export default function ListCard({ data }) {
   };
   const handleDelete = (e) => {
     e.stopPropagation();
-    dispatch(deleteList(data._id));
+    dispatch(deleteList(data._id)); // deletes list
     setShowDelete(!showDelete);
   };
   const handleEdit = (e) => {
     e.stopPropagation();
-    setShowDelete(!showDelete);
-    dispatch(openModal({ title: data.title }, { id: data._id }));
+    setShowDelete(!showDelete); // closes delete option once modal is open
+    dispatch(openModal({ title: data.title }, { id: data._id })); // open modal with defaultvalues and options
   };
   return (
     <div

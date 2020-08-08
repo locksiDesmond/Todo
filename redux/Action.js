@@ -1,6 +1,7 @@
 import * as Types from "./Types";
 import Cookies from "js-cookie";
-import { updateListRequest } from "./Action";
+// user action creators
+
 export const addUserRequested = () => ({
   type: Types.ADD_USER_REQUESTED,
 });
@@ -15,6 +16,9 @@ export const addUserFailed = (error) => ({
 export const removeUser = () => ({
   type: Types.REMOVE_USER,
 });
+
+// lists action creators
+
 export const addListRequested = () => ({
   type: Types.ADD_LIST_REQUESTED,
 });
@@ -33,9 +37,23 @@ export const deleteListSucceeded = (title) => ({
   type: Types.DELETE_LIST_SUCCEEDED,
   payload: title,
 });
+export const updateListRequested = () => ({
+  type: Types.UPDATE_LIST_REQUESTED,
+});
+export const updateListFailed = (error) => ({
+  type: Types.UPDATE_LIST_FAILED,
+  payload: data,
+});
+export const updateListSucceeded = (data) => ({
+  type: Types.UPDATE_LIST_SUCCEEDED,
+  payload: data,
+});
 export const clearList = () => ({
   type: Types.CLEAR_LIST,
 });
+
+// tasks action creator
+
 export const clearTask = (id) => ({
   type: Types.CLEAR_TASK,
   payload: id,
@@ -43,17 +61,6 @@ export const clearTask = (id) => ({
 export const toggleTask = (id) => ({
   type: Types.TOOGLE_TASK,
   payload: id,
-});
-export const openModal = (data = null, options) => ({
-  type: Types.OPEN_MODAL,
-  payload: { data, options },
-});
-export const openModalWithOptions = (data) => ({
-  type: Types.OPEN_MODAL_WITH_OPTIONS,
-  payload: data,
-});
-export const closeModal = () => ({
-  type: Types.CLOSE_MODAL,
 });
 export const deleteTaskRequested = () => ({
   type: Types.DELETE_TASK_REQUESTED,
@@ -88,17 +95,17 @@ export const updateTaskSucceeded = (data) => ({
   type: Types.UPDATE_TASK_SUCCEEDED,
   payload: data,
 });
-export const updateListRequested = () => ({
-  type: Types.UPDATE_LIST_REQUESTED,
+
+// modal action creators
+export const openModal = (data = null, options) => ({
+  type: Types.OPEN_MODAL,
+  payload: { data, options },
 });
-export const updateListFailed = (error) => ({
-  type: Types.UPDATE_LIST_FAILED,
-  payload: data,
+export const closeModal = () => ({
+  type: Types.CLOSE_MODAL,
 });
-export const updateListSucceeded = (data) => ({
-  type: Types.UPDATE_LIST_SUCCEEDED,
-  payload: data,
-});
+
+// redux async action creator
 export const addUser = (data, url) => async (dispatch) => {
   dispatch(addUserRequested());
 

@@ -39,14 +39,25 @@ export const List = (state = { lists: [] }, action) => {
         error: "",
       };
     case Types.CLEAR_LIST:
-      return { ...state, lists: [], loading: false, error: null };
+      return {
+        ...state,
+        lists: [],
+        loading: false,
+        fetching: false,
+        error: null,
+      };
     case Types.DELETE_LIST_SUCCEEDED:
       const filteredList = state.lists.filter((item) => {
         if (item._id !== action.payload) {
           return true;
         }
       });
-      return { ...state, lists: [...filteredList] };
+      return {
+        ...state,
+        loading: false,
+        fetching: false,
+        lists: [...filteredList],
+      };
     case Types.REMOVE_USER:
       return { list: [] };
     default:

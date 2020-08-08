@@ -17,12 +17,12 @@ export default function CreateListModal(props) {
   const onSubmit = async (data) => {
     let response;
     if (options && options.id) {
-      response = await dispatch(updateList(data, options.id));
+      response = await dispatch(updateList(data, options.id)); // updates list
     } else {
-      response = await dispatch(addList(data));
+      response = await dispatch(addList(data)); // creates list
     }
     if (response) {
-      dispatch(closeModal());
+      dispatch(closeModal()); //closes modal
     }
   };
 

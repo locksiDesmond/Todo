@@ -16,7 +16,7 @@ export default function Main(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!loading && !id) {
-      router.push("/login");
+      router.push("/login"); //reroutes unauthourized user
     }
   }, [id, loading]);
   return (

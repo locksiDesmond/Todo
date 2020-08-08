@@ -5,17 +5,20 @@ import List from "../../database/models/Lists";
 import Authorize from "../../middleware/Authorize";
 const handler = nextConnect();
 
+// joi schema for authentication
 const schema = Joi.object().keys({
   title: Joi.string().min(3).required(),
 });
 
-handler.use(Authorize);
-handler.use(Connection);
+handler.use(Authorize); //check's if user is authorized
+handler.use(Connection); // connects to database
 handler.post(async (req, res) => {
+  // validates user's form data
   const { error } = schema.validate(req.body);
   if (error) {
     res.json(error);
   } else {
+    //creates a todo list
     await List.create(
       { ...req.body, created_by: res.decodeId },
       (err, list) => {
@@ -30,6 +33,7 @@ handler.post(async (req, res) => {
   }
 });
 handler.get(async (req, res) => {
+  //gets all user lists
   await List.find({ created_by: res.decodeId }, (err, lists) => {
     if (err) throw err;
     if (lists) {
@@ -39,6 +43,7 @@ handler.get(async (req, res) => {
 });
 handler.delete(async (req, res) => {
   if (req.query.id) {
+    //deletes a list
     await List.findByIdAndDelete(req.query.id, (err, result) => {
       if (err) throw err;
       if (result) {
@@ -55,6 +60,7 @@ handler.put(async (req, res) => {
     if (error) {
       return res.json(error);
     } else {
+      // edits a list
       await List.findByIdAndUpdate(
         req.query.id,
         { ...req.body },
