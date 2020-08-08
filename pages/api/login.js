@@ -6,24 +6,28 @@ import User from "./../../database/models/User";
 const bct = require("bcryptjs");
 const Jwt = require("jsonwebtoken");
 const handler = nextConnect();
-handler.use(Connection);
+handler.use(Connection); // database connection
 handler.post(async (req, res) => {
   const { email, password } = req.body;
+  // form data validation using joi
   const schema = Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().min(7).required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
-    return res.json(error);
+    return res.json(error); // sends error
   } else {
+    // checks if email exist in database
     await User.findOne({ email }, (err, foundUser) => {
       if (err) {
         throw err;
       }
       if (foundUser) {
         const isPasswordValid = bct.compareSync(password, foundUser.password);
+        // checks if password is valid
         if (isPasswordValid) {
+          // creates token for user
           const token = Jwt.sign({ id: foundUser._id }, process.env.KEY);
           const { name, email, date_joined, _id } = foundUser;
           return res.json({

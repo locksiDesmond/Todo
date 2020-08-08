@@ -8,7 +8,7 @@ export default function LoginForm() {
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.user);
   const onSubmit = (data) => {
-    dispatch(addUser(data, "/api/login"));
+    dispatch(addUser(data, "/api/login")); // submits user's form data
   };
 
   return (
@@ -41,19 +41,14 @@ export default function LoginForm() {
       </div>
       <div className="mt2 flex">
         <input
+          disabled={loading ? "value" : null}
           type="submit"
           className={`${styles.button} ${styles.buttonCurve}`}
         />
       </div>
       {loading ? (
         <div className="flex flex--center mt--2">
-          <Loader
-            type="Oval"
-            color="#00BFFF"
-            height={40}
-            width={40}
-            timeout={6000}
-          />
+          <Loader type="Oval" color="#00BFFF" height={40} width={40} />
         </div>
       ) : (
         <p className={styles.error}>{error}</p>

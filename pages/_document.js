@@ -5,10 +5,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
           <meta name="description" content="A todo list app" />
           <meta name="application-name" content="Todo App" />
           <meta name="apple-mobile-web-app-capable" content="yes" />

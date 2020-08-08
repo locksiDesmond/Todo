@@ -1,22 +1,25 @@
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { user, list, tasks, modal } from "./Reducer";
 import { loadDataFromLocalStorage } from "../lib/LocalStorage";
 import { saveStateToLocalStorage } from "./../lib/LocalStorage";
+import { User } from "./Reducers/User";
+import { List } from "./Reducers/Lists";
+import { Tasks } from "./Reducers/Tasks";
+import { Modal } from "./Reducers/Modal";
 
 const reducer = combineReducers({
-  user,
-  list,
-  tasks,
-  modal,
+  user: User,
+  list: List,
+  tasks: Tasks,
+  modal: Modal,
 });
-const persistedState = loadDataFromLocalStorage();
+const persistedState = loadDataFromLocalStorage(); // loads store from local storage
 const middleware = [thunk];
 const store = createStore(
   reducer,
   persistedState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
-store.subscribe(() => saveStateToLocalStorage(store.getState()));
+store.subscribe(() => saveStateToLocalStorage(store.getState())); // saves store to local storage
 export default store;

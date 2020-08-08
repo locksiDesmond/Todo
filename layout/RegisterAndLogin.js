@@ -1,3 +1,4 @@
+// A layout to wrap login and register forms
 import { useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Layout.module.css";

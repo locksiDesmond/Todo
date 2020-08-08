@@ -1,5 +1,5 @@
 import Main from "./../layout/Main";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styles from "../styles/Card.module.css";
 import formStyles from "../styles/Form.module.css";
 import ListCard from "./../component/ListCard";
@@ -7,10 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getList, openModal } from "./../redux/Action";
 import isArrayEmpty from "./../lib/isArrayEmpty";
 export default function Home() {
-  const { lists, pending } = useSelector((state) => state.list);
+  const { lists, fetching } = useSelector((state) => state.list);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getList());
+    dispatch(getList()); //gets lists
   }, []);
   return (
     <Main createList>
@@ -23,7 +23,7 @@ export default function Home() {
           Create list
         </button>
       </div>
-      {pending ? (
+      {fetching ? (
         <div className={styles.cards}>
           {new Array(4).fill(null).map((item, index) => (
             <ListCard key={index} data={item} />

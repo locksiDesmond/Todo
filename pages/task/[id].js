@@ -17,10 +17,11 @@ export default function Task() {
   const handleDelete = async () => {
     const response = await dispatch(deleteTask(id));
     if (response) {
-      Router.push(`/tasks/${data.list._id}`);
+      Router.push(`/tasks/${data.list._id}`); // reroute user back to Tasks page
     }
   };
   useEffect(() => {
+    // fetch a task using its id
     const fetchTask = async () => {
       try {
         const response = await fetch(`/api/task?id=${id}`).then((res) =>
@@ -38,8 +39,27 @@ export default function Task() {
       fetchTask();
     }
   }, [id]);
+  const handleTaskUpdate = async () => {
+    // sends a request to open modal with default values
+    dispatch(
+      openModal(
+        {
+          title: data.title,
+          description: data.description,
+        },
+        {
+          id: data._id,
+          task: data.list,
+        }
+      )
+    );
+  };
   return (
-    <Main createTask task={data.list} id={data._id}>
+    <Main
+      createTask
+      task={data.list}
+      back={data.list && `/tasks/${data.list._id}`}
+    >
       {loading ? (
         <div className="flex flex--center">
           <Spinner />
@@ -61,7 +81,7 @@ export default function Task() {
               <p>Description</p>
               <div className={styles.description}>{data.description}</div>
             </div>
-            <div className="flex flex--space-between">
+            <div className="flex flex--space-between mt--3">
               <button
                 className={`${formStyles.button} mx--1 button--box-shadow width--auto bg--cancel`}
                 onClick={() => handleDelete()}
@@ -70,15 +90,8 @@ export default function Task() {
                 Delete
               </button>
               <button
-                onClick={() =>
-                  dispatch(
-                    openModal({
-                      title: data.title,
-                      description: data.description,
-                    })
-                  )
-                }
-                className={`${formStyles.button} mx--1 button--box-shadow width--auto`}
+                onClick={() => handleTaskUpdate()}
+                className={`${formStyles.button} mx--1  button--box-shadow width--auto`}
               >
                 Update Task
               </button>

@@ -10,11 +10,13 @@ async function Authenticate(req, res, next) {
   }
 
   if (!res.decodeId) {
+    // verifies if user token is valid
     jwt.verify(token, process.env.KEY, (err, decode) => {
       if (err) {
         console.log(err);
         throw new Error(err);
       }
+      // stores the id in res.decodeId
       res.decodeId = decode.id;
     });
   }

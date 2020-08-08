@@ -1,5 +1,7 @@
 import * as Types from "./Types";
 import Cookies from "js-cookie";
+// user action creators
+
 export const addUserRequested = () => ({
   type: Types.ADD_USER_REQUESTED,
 });
@@ -14,6 +16,9 @@ export const addUserFailed = (error) => ({
 export const removeUser = () => ({
   type: Types.REMOVE_USER,
 });
+
+// lists action creators
+
 export const addListRequested = () => ({
   type: Types.ADD_LIST_REQUESTED,
 });
@@ -32,22 +37,30 @@ export const deleteListSucceeded = (title) => ({
   type: Types.DELETE_LIST_SUCCEEDED,
   payload: title,
 });
+export const updateListRequested = () => ({
+  type: Types.UPDATE_LIST_REQUESTED,
+});
+export const updateListFailed = (error) => ({
+  type: Types.UPDATE_LIST_FAILED,
+  payload: data,
+});
+export const updateListSucceeded = (data) => ({
+  type: Types.UPDATE_LIST_SUCCEEDED,
+  payload: data,
+});
 export const clearList = () => ({
   type: Types.CLEAR_LIST,
 });
-export const clearTask = () => ({
+
+// tasks action creator
+
+export const clearTask = (id) => ({
   type: Types.CLEAR_TASK,
+  payload: id,
 });
 export const toggleTask = (id) => ({
   type: Types.TOOGLE_TASK,
   payload: id,
-});
-export const openModal = (data = null) => ({
-  type: Types.OPEN_MODAL,
-  payload: data,
-});
-export const closeModal = () => ({
-  type: Types.CLOSE_MODAL,
 });
 export const deleteTaskRequested = () => ({
   type: Types.DELETE_TASK_REQUESTED,
@@ -71,7 +84,7 @@ export const addTaskFailed = (error) => ({
   type: Types.ADD_TASK_FAILED,
   payload: error,
 });
-export const updateTaskRequest = () => ({
+export const updateTaskRequested = () => ({
   type: Types.UPDATE_TASK_REQUESTED,
 });
 export const updateTaskFailed = (error) => ({
@@ -82,6 +95,17 @@ export const updateTaskSucceeded = (data) => ({
   type: Types.UPDATE_TASK_SUCCEEDED,
   payload: data,
 });
+
+// modal action creators
+export const openModal = (data = null, options) => ({
+  type: Types.OPEN_MODAL,
+  payload: { data, options },
+});
+export const closeModal = () => ({
+  type: Types.CLOSE_MODAL,
+});
+
+// redux async action creator
 export const addUser = (data, url) => async (dispatch) => {
   dispatch(addUserRequested());
 
@@ -155,7 +179,7 @@ export const getTask = (id) => async (dispatch) => {
     res.json()
   );
   if (response) {
-    dispatch(clearTask());
+    dispatch(clearTask(id));
     response.map((element) => {
       dispatch(addTaskSucceeded(element));
     });
@@ -181,7 +205,7 @@ export const deleteTask = (id) => async (dispatch) => {
   }
 };
 export const updateTask = (data, id) => async (dispatch) => {
-  dispatch(updateTaskRequest());
+  dispatch(updateTaskRequested());
   const response = await fetch(`/api/task?id=${id}`, {
     method: "PUT",
     headers: {
@@ -191,6 +215,20 @@ export const updateTask = (data, id) => async (dispatch) => {
   }).then((res) => res.json());
   if (response.task) {
     dispatch(updateTaskSucceeded(response.task));
+    return { message: "done" };
+  }
+};
+export const updateList = (data, id) => async (dispatch) => {
+  dispatch(updateListRequested());
+  const response = await fetch(`/api/list?id=${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((res) => res.json());
+  if (response.list) {
+    dispatch(updateListSucceeded(response.list));
     return { message: "done" };
   }
 };
