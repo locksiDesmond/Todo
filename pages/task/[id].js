@@ -38,8 +38,26 @@ export default function Task() {
       fetchTask();
     }
   }, [id]);
+  const handleTaskUpdate = async () => {
+    dispatch(
+      openModal(
+        {
+          title: data.title,
+          description: data.description,
+        },
+        {
+          id: data._id,
+          task: data.list,
+        }
+      )
+    );
+  };
   return (
-    <Main createTask task={data.list} id={data._id}>
+    <Main
+      createTask
+      task={data.list}
+      back={data.list && `/tasks/${data.list._id}`}
+    >
       {loading ? (
         <div className="flex flex--center">
           <Spinner />
@@ -61,7 +79,7 @@ export default function Task() {
               <p>Description</p>
               <div className={styles.description}>{data.description}</div>
             </div>
-            <div className="flex flex--space-between">
+            <div className="flex flex--space-between mt--3">
               <button
                 className={`${formStyles.button} mx--1 button--box-shadow width--auto bg--cancel`}
                 onClick={() => handleDelete()}
@@ -70,15 +88,8 @@ export default function Task() {
                 Delete
               </button>
               <button
-                onClick={() =>
-                  dispatch(
-                    openModal({
-                      title: data.title,
-                      description: data.description,
-                    })
-                  )
-                }
-                className={`${formStyles.button} mx--1 button--box-shadow width--auto`}
+                onClick={() => handleTaskUpdate()}
+                className={`${formStyles.button} mx--1  button--box-shadow width--auto`}
               >
                 Update Task
               </button>

@@ -19,7 +19,7 @@ export default function ListCard({ data }) {
   const handleEdit = (e) => {
     e.stopPropagation();
     setShowDelete(!showDelete);
-    dispatch(openModal({ title: data.title }));
+    dispatch(openModal({ title: data.title }, { id: data._id }));
   };
   return (
     <div

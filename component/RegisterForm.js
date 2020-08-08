@@ -46,19 +46,14 @@ export default function RegisterForm() {
       <div className="mt2 flex">
         <input
           type="submit"
+          disabled={loading ? "value" : null}
           className={`${styles.button} ${styles.buttonCurve}`}
         />
       </div>
       <p>
         {loading && (
           <div className="flex flex--center mt--2">
-            <Loader
-              type="Oval"
-              color="#00BFFF"
-              height={40}
-              width={40}
-              timeout={6000}
-            />
+            <Loader type="Oval" color="#00BFFF" height={40} width={40} />
           </div>
         )}
       </p>

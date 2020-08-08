@@ -89,6 +89,7 @@ handler.put(async (req, res) => {
       await Task.findByIdAndUpdate(
         req.query.id,
         { ...req.body },
+        { new: true },
         (err, task) => {
           if (err) throw err;
           res.json({ task });

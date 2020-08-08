@@ -8,6 +8,7 @@ import CreateTaskModal from "../component/CreateTaskModal";
 import { removeUser } from "../redux/Action";
 import Link from "next/link";
 import { openModal } from "./../redux/Action";
+import Router from "next/router";
 export default function Main(props) {
   const { name, id, loading } = useSelector((state) => state.user);
   const [showProfile, setShowProfile] = useState(false);
@@ -51,6 +52,14 @@ export default function Main(props) {
             <h1 className={styles.h1}>Todo</h1>
           </a>
         </Link>
+        {props.back && (
+          <div
+            onClick={() => Router.push(`${props.back}`)}
+            className={styles.back}
+          >
+            <img src="/svg/back.svg" alt="back arrow" />
+          </div>
+        )}
       </nav>
       <div className={styles.main}>
         <div className={styles.containerFluid}>{props.children}</div>
@@ -65,9 +74,12 @@ export default function Main(props) {
           <img src="/svg/createList.svg" alt="edit" />
         </div>
       )}
-      {props.createTask && <CreateTaskModal task={props.task} id={props.id} />}
+      {props.createTask && <CreateTaskModal />}
       {props.createTask && (
-        <div onClick={() => dispatch(openModal())} className={styles.create}>
+        <div
+          onClick={() => dispatch(openModal(null, { task: props.task }))}
+          className={styles.create}
+        >
           <img src="/svg/createList.svg" alt="edit" />
         </div>
       )}

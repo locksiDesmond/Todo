@@ -35,7 +35,7 @@ export default function Tasks() {
       }
     });
     setCurrentTasks(current);
-  }, [tasks]);
+  }, [tasks, loading]);
   useEffect(() => {
     if (id) {
       dispatch(getTask(id));
@@ -48,10 +48,12 @@ export default function Tasks() {
   }, [id]);
 
   return (
-    <Main createTask task={currentList}>
+    <Main createTask task={currentList} back="/">
       <div>
         <div className="flex flex--space-between mb--1 flex--align-center">
-          <h2 className="text--bold ml--1"> {currentList.title} Tasks</h2>
+          <h2 className="text--bold text--capitalize text--sm ml--1">
+            {currentList.title} Tasks
+          </h2>
           <div className="flex flex--space-between colgap--1 ">
             {checkedItems.length ? (
               <button
@@ -62,7 +64,7 @@ export default function Tasks() {
               </button>
             ) : null}
             <button
-              onClick={() => dispatch(openModal())}
+              onClick={() => dispatch(openModal(null, { task: currentList }))}
               className={`${formStyles.button} button--box-shadow  bg--create width--auto`}
             >
               Create Task

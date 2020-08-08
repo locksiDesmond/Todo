@@ -3,14 +3,15 @@ import nextConnect from "next-connect";
 import Connection from "../../database/Connection";
 import List from "../../database/models/Lists";
 import Authorize from "../../middleware/Authorize";
-
 const handler = nextConnect();
+
+const schema = Joi.object().keys({
+  title: Joi.string().min(3).required(),
+});
+
 handler.use(Authorize);
 handler.use(Connection);
 handler.post(async (req, res) => {
-  const schema = Joi.object().keys({
-    title: Joi.string().min(3).required(),
-  });
   const { error } = schema.validate(req.body);
   if (error) {
     res.json(error);
@@ -44,6 +45,26 @@ handler.delete(async (req, res) => {
         res.json({ message: "List successfully deleted" });
       }
     });
+  } else {
+    throw "no id found";
+  }
+});
+handler.put(async (req, res) => {
+  if (req.query.id) {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return res.json(error);
+    } else {
+      await List.findByIdAndUpdate(
+        req.query.id,
+        { ...req.body },
+        { new: true },
+        (err, list) => {
+          if (err) throw err;
+          res.json({ list });
+        }
+      );
+    }
   } else {
     throw "no id found";
   }

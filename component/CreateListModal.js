@@ -3,7 +3,7 @@ import styles from "../styles/Form.module.css";
 import modalStyles from "../styles/Modal.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addList, openModal } from "../redux/Action";
+import { addList, updateList } from "../redux/Action";
 import Loader from "react-loader-spinner";
 import { closeModal } from "./../redux/Action";
 Modal.setAppElement("#__next");
@@ -11,9 +11,16 @@ export default function CreateListModal(props) {
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.list);
-  const modal = useSelector((state) => state.modal);
+  const { isOpen, defaultValues, options } = useSelector(
+    (state) => state.modal
+  );
   const onSubmit = async (data) => {
-    const response = await dispatch(addList(data));
+    let response;
+    if (options && options.id) {
+      response = await dispatch(updateList(data, options.id));
+    } else {
+      response = await dispatch(addList(data));
+    }
     if (response) {
       dispatch(closeModal());
     }
@@ -21,7 +28,7 @@ export default function CreateListModal(props) {
 
   return (
     <Modal
-      isOpen={modal.isOpen}
+      isOpen={isOpen}
       onRequestClose={() => dispatch(closeModal())}
       className={modalStyles.modal}
       contentLabel="Create list modal"
@@ -40,9 +47,7 @@ export default function CreateListModal(props) {
             name="title"
             placeholder="List Title"
             type="title"
-            defaultValue={
-              modal.defaultValues ? modal.defaultValues.title : null
-            }
+            defaultValue={defaultValues ? defaultValues.title : null}
             className={styles.input}
             ref={register({ required: true })}
           />

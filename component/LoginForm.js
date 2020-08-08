@@ -41,6 +41,7 @@ export default function LoginForm() {
       </div>
       <div className="mt2 flex">
         <input
+          disabled={loading ? "value" : null}
           type="submit"
           className={`${styles.button} ${styles.buttonCurve}`}
         />
