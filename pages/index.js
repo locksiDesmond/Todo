@@ -1,6 +1,43 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-
+import Main from "./../layout/Main";
+import { useState, useEffect } from "react";
+import styles from "../styles/Card.module.css";
+import formStyles from "../styles/Form.module.css";
+import ListCard from "./../component/ListCard";
+import { useSelector, useDispatch } from "react-redux";
+import { getList, openModal } from "./../redux/Action";
+import isArrayEmpty from "./../lib/isArrayEmpty";
 export default function Home() {
-  return <div>Rubbish</div>;
+  const { lists, pending } = useSelector((state) => state.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getList());
+  }, []);
+  return (
+    <Main createList>
+      <div className="flex flex--space-between flex--align-center mb--1">
+        <h2 className="text--bold ml--1">Lists</h2>
+        <button
+          onClick={() => dispatch(openModal())}
+          className={`${formStyles.button} button--box-shadow width--auto bg--create button--md`}
+        >
+          Create list
+        </button>
+      </div>
+      {pending ? (
+        <div className={styles.cards}>
+          {new Array(4).fill(null).map((item, index) => (
+            <ListCard key={index} data={item} />
+          ))}
+        </div>
+      ) : isArrayEmpty(lists) ? (
+        <p className="flex flex--center"> You have no todo list</p>
+      ) : (
+        <div className={styles.cards}>
+          {lists.map((item, index) => (
+            <ListCard key={index} data={item} />
+          ))}
+        </div>
+      )}
+    </Main>
+  );
 }
