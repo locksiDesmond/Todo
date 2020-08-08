@@ -7,7 +7,7 @@ export default function RegisterForm() {
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.user);
   const onSubmit = (data) => {
-    dispatch(addUser(data, "register"));
+    dispatch(addUser(data, "/api/register"));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
