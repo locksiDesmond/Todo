@@ -13,6 +13,8 @@ const schema = Joi.object().keys({
 handler.use(Authorize); //check's if user is authorized
 handler.use(Connection); // connects to database
 handler.post(async (req, res) => {
+  // @desc   this function validates a user form data and creates a list;
+
   // validates user's form data
   const { error } = schema.validate(req.body);
   if (error) {
@@ -33,7 +35,8 @@ handler.post(async (req, res) => {
   }
 });
 handler.get(async (req, res) => {
-  //gets all user lists
+  // @desc this function fetchings all List created by a user;
+
   await List.find({ created_by: res.decodeId }, (err, lists) => {
     if (err) throw err;
     if (lists) {
@@ -42,8 +45,8 @@ handler.get(async (req, res) => {
   });
 });
 handler.delete(async (req, res) => {
+  // @desc this function will delete a user list
   if (req.query.id) {
-    //deletes a list
     await List.findByIdAndDelete(req.query.id, (err, result) => {
       if (err) throw err;
       if (result) {
@@ -55,6 +58,7 @@ handler.delete(async (req, res) => {
   }
 });
 handler.put(async (req, res) => {
+  // @desc this function finds and update a user's list;
   if (req.query.id) {
     const { error } = schema.validate(req.body);
     if (error) {

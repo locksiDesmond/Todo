@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTask, deleteTask, openModal } from "./../../redux/Action";
 import isArrayEmpty from "./../../lib/isArrayEmpty";
 export default function Tasks() {
+  // @desc a page the renders all task that belongs to a list
+  // @feature create task(s), delete task(s)
   const router = useRouter();
   const { id } = router.query;
   const [currentList, setCurrentList] = useState({});
@@ -17,13 +19,13 @@ export default function Tasks() {
   const { lists } = useSelector((state) => state.list);
   const dispatch = useDispatch();
   const handleDelete = () => {
-    //checks if tasks are checked
+    // delete task(s)
     checkedItems.map((item) => {
       dispatch(deleteTask(item._id));
     });
   };
   useEffect(() => {
-    //filters tasks base on page dynamic id
+    //checks if tasks are checked
     const item = tasks.filter(
       (element) => element.list === id && element.checked
     );
@@ -40,7 +42,7 @@ export default function Tasks() {
   }, [tasks, loading]);
   useEffect(() => {
     if (id) {
-      dispatch(getTask(id)); //fetch for task
+      dispatch(getTask(id)); //fetch task(s)
       lists.forEach((element) => {
         if (element._id === id) {
           setCurrentList(element);

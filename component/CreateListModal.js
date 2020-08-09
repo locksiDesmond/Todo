@@ -7,7 +7,10 @@ import { addList, updateList } from "../redux/Action";
 import Loader from "react-loader-spinner";
 import { closeModal } from "./../redux/Action";
 Modal.setAppElement("#__next");
-export default function CreateListModal(props) {
+export default function CreateListModal() {
+  // @desc this component is a modal the contains form input
+  //@features it will allow a user to create a list, update a list and close the modal
+  //@required list title
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.list);

@@ -10,13 +10,15 @@ import Link from "next/link";
 import { openModal } from "./../redux/Action";
 import Router from "next/router";
 export default function Main(props) {
+  // @desc a higher level component (layout)
+  // @features open modal, check if user is authorized , log user out , create task / list button
   const { name, id, loading } = useSelector((state) => state.user);
   const [showProfile, setShowProfile] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   useEffect(() => {
     if (!loading && !id) {
-      router.push("/login"); //reroutes unauthourized user
+      router.push("/login"); //reroutes unauthorized user
     }
   }, [id, loading]);
   return (

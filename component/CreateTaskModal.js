@@ -8,6 +8,9 @@ import Loader from "react-loader-spinner";
 import Router from "next/router";
 Modal.setAppElement("#__next");
 export default function CreateTaskModal(props) {
+  // @desc this component is a modal the contains form input for task
+  //@features it will allow a user to create a task , update a task and close the modal
+  //@required  task title, task description
   const { register, errors, handleSubmit } = useForm();
   const { error, loading } = useSelector((state) => state.tasks);
   const { isOpen, defaultValues, options } = useSelector(
@@ -20,13 +23,13 @@ export default function CreateTaskModal(props) {
     if (options && options.id) {
       response = await dispatch(
         updateTask({ ...data, list: options.task._id }, options.id)
-      ); // updates task
+      ); // update task with it's id passed as option
       Router.reload();
     } else {
       response = await dispatch(addTask({ ...data, list: options.task._id })); // add task
     }
     if (response) {
-      dispatch(closeModal()); // closes modal
+      dispatch(closeModal()); // close modal
     }
   };
   return (

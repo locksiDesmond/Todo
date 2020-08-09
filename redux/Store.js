@@ -14,12 +14,12 @@ const reducer = combineReducers({
   tasks: Tasks,
   modal: Modal,
 });
-const persistedState = loadDataFromLocalStorage(); // loads store from local storage
+const persistedState = loadDataFromLocalStorage(); // load store from local storage
 const middleware = [thunk];
 const store = createStore(
   reducer,
   persistedState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
-store.subscribe(() => saveStateToLocalStorage(store.getState())); // saves store to local storage
+store.subscribe(() => saveStateToLocalStorage(store.getState())); // save store to local storage
 export default store;

@@ -8,6 +8,7 @@ const Jwt = require("jsonwebtoken");
 const handler = nextConnect();
 handler.use(Connection); // database connection
 handler.post(async (req, res) => {
+  // @desc this function will verify a user data and check if password matches the hash password on the database
   const { email, password } = req.body;
   // form data validation using joi
   const schema = Joi.object().keys({
@@ -18,16 +19,16 @@ handler.post(async (req, res) => {
   if (error) {
     return res.json(error); // sends error
   } else {
-    // checks if email exist in database
+    // check if email exist in database
     await User.findOne({ email }, (err, foundUser) => {
       if (err) {
         throw err;
       }
       if (foundUser) {
         const isPasswordValid = bct.compareSync(password, foundUser.password);
-        // checks if password is valid
+        // check if password is valid
         if (isPasswordValid) {
-          // creates token for user
+          // create token for user
           const token = Jwt.sign({ id: foundUser._id }, process.env.KEY);
           const { name, email, date_joined, _id } = foundUser;
           return res.json({

@@ -9,6 +9,7 @@ const handler = nextConnect();
 
 handler.use(Connection); //database connection
 handler.post(async (req, res) => {
+  // @desc this function will register a user
   const { password, email, name } = req.body;
   // form data validation using joi
   const Schema = Joi.object().keys({

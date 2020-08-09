@@ -4,21 +4,23 @@ import Router from "next/router";
 import { useDispatch } from "react-redux";
 import { deleteList, openModal } from "./../redux/Action";
 export default function ListCard({ data }) {
+  // @desc this component will return a list card with
+  // @features it can delete a list , edit a list
   const [showDelete, setShowDelete] = useState(false);
   const dispatch = useDispatch();
   const handleRoute = (e) => {
     if (data) {
-      Router.push(`/tasks/${data._id}`);
+      Router.push(`/tasks/${data._id}`); // route to another page
     }
   };
   const handleDelete = (e) => {
     e.stopPropagation();
-    dispatch(deleteList(data._id)); // deletes list
+    dispatch(deleteList(data._id)); // delete list
     setShowDelete(!showDelete);
   };
   const handleEdit = (e) => {
     e.stopPropagation();
-    setShowDelete(!showDelete); // closes delete option once modal is open
+    setShowDelete(!showDelete); // close list card option once modal is open
     dispatch(openModal({ title: data.title }, { id: data._id })); // open modal with defaultvalues and options
   };
   return (
