@@ -1,30 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ![Todo logo here](/public/book-32.png)   A Todo App
+![issued](https://img.shields.io/github/issues/locksiDesmond/Todo)
+![forks](https://img.shields.io/github/forks/locksiDesmond/Todo)
+![start](https://img.shields.io/github/stars/locksiDesmond/Todo)
+![ask me anything](https://img.shields.io/badge/ask%20me%20anything-yes-brightgreen)
+![twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Flocksi_Desmond)
 
-## Getting Started
 
-First, run the development server:
+[**Visit the website.**](https://todo-lemon.vercel.app)<br>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+*A Todo App* is a progressive web application that maintain, create and edit a todo list and task.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features 
+1. Installable to mobile devices.
+2. The ability for a user to sign up with email, password, and name.
+3. The ability for a user to log in with email and password.
+4. Allows a logged-in user to create lists.
+5. Allows a logged-in user to add tasks to their list.
+6. Allows a logged-in user to delete tasks from their list.
+7. Allows a logged-in user to delete multiple task
+8. Allows a logged-in user to update tasks on their list.
+9. Allows a logged-in user to update their list.
+10. Allows a logged-in user to delete their lists.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Technology used
 
-## Learn More
+### Next
+Next is a React framework. It support server side rendering and other cool features.
+[**Check their documentation.**](https://nextjs.org/learn/basics/create-nextjs-app)<br>
 
-To learn more about Next.js, take a look at the following resources:
+### Adobe xd
+Adobe xd is a platform for building Ui for web and mobile. It supports prototyping as well.
+It helps the developer to visualize what he wants the website to look like.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Redux
+Redux is a state management library that helps to centralize data logic and predictablity.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Mongo atlas
+Mongo atlas is a No sql database.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Designed and Developed by
+Adenola olamilekan Desmond
