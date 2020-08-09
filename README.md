@@ -39,4 +39,4 @@ Redux is a state management library that helps to centralize data logic and pred
 Mongo atlas is a No sql database.
 
 ## Designed and Developed by
-Adenola olamilekan Desmond
+Adenola Olamilekan Desmond
