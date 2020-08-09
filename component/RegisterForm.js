@@ -14,8 +14,10 @@ export default function RegisterForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <div className={styles.formGroup}>
+        <label className={styles.label} for="name"></label>
         <input
           name="name"
+          id="name"
           className={styles.input}
           placeholder="Username"
           ref={register({ required: true })}
@@ -23,8 +25,10 @@ export default function RegisterForm() {
         <p className={styles.error}>{errors.name && "Username is required"}</p>
       </div>
       <div className={styles.formGroup}>
+        <label className={styles.label} for="email"></label>
         <input
           name="email"
+          id="email"
           placeholder="Email"
           type="email"
           className={styles.input}
@@ -33,7 +37,9 @@ export default function RegisterForm() {
         <p className={styles.error}>{errors.email && "Email is required"}</p>
       </div>
       <div className={styles.formGroup}>
+        <label className={styles.label} for="password"></label>
         <input
+          id="password"
           name="password"
           placeholder="Password"
           type="password"

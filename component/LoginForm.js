@@ -15,7 +15,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <div className={styles.formGroup}>
-        <label for="email">&nbsp;</label>
+        <label className={styles.label} for="email"></label>
         <input
           id="email"
           name="email"
@@ -27,7 +27,7 @@ export default function LoginForm() {
         <p className={styles.error}>{errors.email && "Email is required"}</p>
       </div>
       <div className={styles.formGroup}>
-        <label for="password">&nbsp;</label>
+        <label className={styles.label} for="password"></label>
         <input
           id="password"
           name="password"
