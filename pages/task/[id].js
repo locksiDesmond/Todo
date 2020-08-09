@@ -8,6 +8,8 @@ import { DateConversion } from "./../../lib/DateConversion";
 import { deleteTask, openModal } from "./../../redux/Action";
 import Spinner from "./../../component/Spinner";
 export default function Task() {
+  // @desc a page that render a task
+  // @features delete the task , update the task, create a task
   const router = useRouter();
   const { id } = router.query;
   const [loading, setLoading] = useState(true);

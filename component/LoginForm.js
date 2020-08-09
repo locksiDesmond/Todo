@@ -4,11 +4,12 @@ import { addUser } from "../redux/Action";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "react-loader-spinner";
 export default function LoginForm() {
+  // @desc allows a user to log in with email and password
   const { register, errors, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.user);
   const onSubmit = (data) => {
-    dispatch(addUser(data, "/api/login")); // submits user's form data
+    dispatch(addUser(data, "/api/login")); // submit user's form data
   };
 
   return (

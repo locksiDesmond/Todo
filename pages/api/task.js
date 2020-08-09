@@ -13,10 +13,12 @@ const schema = Joi.object().keys({
   list: Joi.string().required(),
 });
 const handler = nextConnect();
-handler.use(Authorize); //check's if user is authorized
-handler.use(Connection); // connects to database
+handler.use(Authorize); //check if user is authorized
+handler.use(Connection); // create a coonection to the database
 handler.post(async (req, res) => {
-  // validates user's form data
+  //@desc create a user task
+
+  // validate user's form data
   const { error } = schema.validate(req.body);
   if (error) {
     res.json(error);
@@ -67,8 +69,9 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
+  // @desc fetch for task(s)
   if (req.query.list) {
-    //gets all available tasks of a list
+    //get all available tasks of a list
     await Task.find({ list: req.query.list }, (err, list) => {
       if (err) {
         throw err;
@@ -78,7 +81,7 @@ handler.get(async (req, res) => {
       }
     });
   } else if (req.query.id) {
-    // finds a task using it's id
+    // find a task using it's id
     const task = await Task.findById(req.query.id).populate("list");
     res.json(task);
   } else {
@@ -87,12 +90,12 @@ handler.get(async (req, res) => {
 });
 
 handler.put(async (req, res) => {
+  // @desc update a task
   const { error } = schema.validate(req.body);
   if (error) {
     res.json(error);
   } else {
     if (req.query.id) {
-      // updates a task
       await Task.findByIdAndUpdate(
         req.query.id,
         { ...req.body },
@@ -108,6 +111,7 @@ handler.put(async (req, res) => {
   }
 });
 handler.delete(async (req, res) => {
+  // @desc delete a task
   if (req.query.id) {
     //Asynchronously  deletes a todo task , find the list it belongs to ,update the no of task it contains then return a message to the client
     Async.waterfall(

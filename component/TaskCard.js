@@ -4,6 +4,7 @@ import { toggleTask } from "./../redux/Action";
 import { DateConversion } from "./../lib/DateConversion";
 import Router from "next/router";
 export default function TaskCard({ task }) {
+  // @desc return a task card  with a methods to mark (select) and also route to another page when clicked
   const dispatch = useDispatch();
   const handleChange = (e) => {
     dispatch(toggleTask(task._id));
