@@ -35,7 +35,7 @@ It helps the developer to visualize what he wants the website to look like.
 ### Redux
 Redux is a state management library that helps to centralize data logic and predictablity.
 
-## Mongo atlas
+### Mongo atlas
 Mongo atlas is a No sql database.
 
 ## Designed and Developed by
